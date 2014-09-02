@@ -1,0 +1,48 @@
+@import "modules/all"
+
+
+$tile-size: 40px
+
+\:host 
+    color: black
+    background-color: white
+
+    display: inline-block
+    position: relative
+    width: 2*$tile-size
+    height: $tile-size
+    border-radius: 8px
+    
+    border: 1px solid black
+    border-bottom-width: 4px
+    border-right-width: 4px
+    
+    &.vertical
+        transform: rotate(90deg)
+        
+
+.separator
+    +absolute-center()
+
+    display: block
+    width: 2px
+    height: 75%
+    background-color: black
+        
+.pin
+    +absolute-center()
+    display: block
+    width: 6px
+    height: 6px
+    border-radius: 3px
+    background-color: black
+
+
+.left, .right 
+    display: block
+    width: $tile-size
+    height: $tile-size
+    position: absolute
+
+.right 
+    left: $tile-size

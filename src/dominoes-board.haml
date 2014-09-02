@@ -1,0 +1,13 @@
+%link(rel="import" href="../polymer/polymer.html")
+%link(rel="import" href="dominoes-tile.html")
+
+%polymer-element(name="dominoes-board" attributes="tiles root" constructor="DominoesBoard")
+    %template
+        / smoosh
+        %link(rel="stylesheet" href="styles/dominoes-board.css")
+        / endsmoosh
+        %template(repeat="{{tile,i in tiles}}")
+            %dominoes-tile(id="tile{{2*i}}" left="{{tile.left}}" right="{{tile.right}}")
+    / smoosh
+    %script(src="scripts/dominoes-board.js")
+    / endsmoosh

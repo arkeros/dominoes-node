@@ -1,0 +1,23 @@
+%link(rel="import" href="../polymer/polymer.html")
+%link(rel="import" href="underscore.html")
+%link(rel="import" href="screenfull.html")
+-#-#%link(rel="import" href="../core-icon/core-icon.html")
+-#%link(rel="import" href="dominoes-board.html")
+-#%link(rel="import" href="dominoes-hand.html")
+
+%polymer-element(name="dominoes-node" attributes="ply board hands" constructor="DominoesNode")
+    %template
+        / smoosh
+        %link(rel="stylesheet" href="styles/dominoes-node.css")
+        / endsmoosh
+        #ply {{ply}}
+        #n_deck {{n_deck}}
+        %dominoes-board#board(tiles="{{board}}")
+        %template(repeat="{{hand,i in hands}}")
+            %dominoes-hand(id="hand{{i}}" tiles="{{hand}}")  
+        #core-toolbar#toolbar
+            %core-tooltip(label="Pantalla completa")
+                %core-icon-button(icon="fullscreen" on-tap="{{toggleFullScreen}}")
+    / smoosh
+    %script(src="scripts/dominoes-node.js")
+    / endsmoosh
