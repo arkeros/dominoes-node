@@ -11,7 +11,7 @@ do (scope = window) ->
 
         ready: ->
             @n_deck  = 28
-            @n_deck -= _.size board
+            @n_deck -= _.size @board
             @n_deck -= _.reduce @hands,
                 (hand, n) -> n + hand.length,
                 0

@@ -1,0 +1,73 @@
+<link href='../polymer/polymer.html' rel='import'>
+<link href='underscore.html' rel='import'>
+<link href='screenfull.html' rel='import'>
+<link href='dominoes-board.html' rel='import'>
+<link href='dominoes-hand.html' rel='import'>
+<polymer-element attributes='ply board hands' constructor='DominoesNode' name='dominoes-node'>
+  <template>
+    <style>:host {
+  position: relative; }
+
+#board {
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+#toolbar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.25); }
+</style>
+    <div id='ply'>{{ply}}</div>
+    <div id='n_deck'>{{n_deck}}</div>
+    <dominoes-board id='board' tiles='{{board}}'></dominoes-board>
+    <template repeat='{{hand,i in hands}}'>
+      <dominoes-hand id='hand{{i}}' tiles='{{hand}}'></dominoes-hand>
+    </template>
+    <div id='toolbar'>
+      <core-tooltip label='Pantalla completa'>
+        <core-icon-button icon='fullscreen' on-tap='{{toggleFullScreen}}'></core-icon-button>
+      </core-tooltip>
+    </div>
+  </template>
+  <script>(function(scope) {
+  'use strict';
+  return scope.Polymer('dominoes-node', {
+    hands: [],
+    board: [],
+    ply: 0,
+    n_deck: 28,
+    currentHand: function() {
+      return this.hands[this.ply];
+    },
+    ready: function() {
+      this.n_deck = 28;
+      this.n_deck -= _.size(this.board);
+      return this.n_deck -= _.reduce(this.hands, function(hand, n) {
+        return n + hand.length;
+      }, 0);
+    },
+    move: function(hand_index, movement) {
+      if (hand_index !== this.ply) {
+        null;
+      }
+      if (!_.contains(this.currentHand(), movement.tile)) {
+        null;
+      }
+      return this.board.move(movement);
+    },
+    toggleFullScreen: function() {
+      if (screenfull.enabled) {
+        screenfull.toggle();
+      }
+      return this;
+    }
+  });
+})(window);
+</script>
+</polymer-element>

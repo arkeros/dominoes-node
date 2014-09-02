@@ -1,0 +1,193 @@
+<link href='../polymer/polymer.html' rel='import'>
+<link href='dominoes-tile.html' rel='import'>
+<polymer-element attributes='tiles root' constructor='DominoesBoard' name='dominoes-board'>
+  <template>
+    <style>:host {
+  position: relative;
+  width: -webkit-calc(8*2*$tile-size + 7px);
+  width: calc(8*2*$tile-size + 7px);
+  height: 370px; }
+
+dominoes-tile {
+  position: absolute; }
+
+tile0deg, #tile-5, #tile-4, #tile-3, #tile-2, #tile-1, #tile0, #tile1, #tile2, #tile3, #tile4, #tile5, #tile6, #tile7 {
+  top: -webkit-calc(50% - 21px);
+  top: calc(50% - 21px); }
+
+tile-90deg, #tile8, #tile9, #tile10, #tile11 {
+  left: -webkit-calc(50% + 246px + 22px);
+  left: calc(50% + 246px + 22px);
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  border-right-width: 1px;
+  border-left-width: 4px; }
+
+tile-180deg, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #tile19, #tile20 {
+  top: -webkit-calc(50% - 21px - 164px);
+  top: calc(50% - 21px - 164px);
+  -webkit-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+  border-width: 1px;
+  border-top-width: 4px; }
+
+#tile-5 {
+  left: -webkit-calc(50% + -245px);
+  left: calc(50% + -245px); }
+
+#tile-4 {
+  left: -webkit-calc(50% + -204px);
+  left: calc(50% + -204px); }
+
+#tile-3 {
+  left: -webkit-calc(50% + -163px);
+  left: calc(50% + -163px); }
+
+#tile-2 {
+  left: -webkit-calc(50% + -122px);
+  left: calc(50% + -122px); }
+
+#tile-1 {
+  left: -webkit-calc(50% + -81px);
+  left: calc(50% + -81px); }
+
+#tile0 {
+  left: -webkit-calc(50% + -40px);
+  left: calc(50% + -40px); }
+
+#tile1 {
+  left: -webkit-calc(50% + 1px);
+  left: calc(50% + 1px); }
+
+#tile2 {
+  left: -webkit-calc(50% + 42px);
+  left: calc(50% + 42px); }
+
+#tile3 {
+  left: -webkit-calc(50% + 83px);
+  left: calc(50% + 83px); }
+
+#tile4 {
+  left: -webkit-calc(50% + 124px);
+  left: calc(50% + 124px); }
+
+#tile5 {
+  left: -webkit-calc(50% + 165px);
+  left: calc(50% + 165px); }
+
+#tile6 {
+  left: -webkit-calc(50% + 206px);
+  left: calc(50% + 206px); }
+
+#tile7 {
+  left: -webkit-calc(50% + 247px);
+  left: calc(50% + 247px); }
+
+#tile8 {
+  top: -webkit-calc(50% - 41px);
+  top: calc(50% - 41px); }
+
+#tile9 {
+  top: -webkit-calc(50% - 82px);
+  top: calc(50% - 82px); }
+
+#tile10 {
+  top: -webkit-calc(50% - 123px);
+  top: calc(50% - 123px); }
+
+#tile11 {
+  top: -webkit-calc(50% - 164px);
+  top: calc(50% - 164px); }
+
+#tile12 {
+  left: -webkit-calc(50% + 248px);
+  left: calc(50% + 248px); }
+
+#tile13 {
+  left: -webkit-calc(50% + 207px);
+  left: calc(50% + 207px); }
+
+#tile14 {
+  left: -webkit-calc(50% + 166px);
+  left: calc(50% + 166px); }
+
+#tile15 {
+  left: -webkit-calc(50% + 125px);
+  left: calc(50% + 125px); }
+
+#tile16 {
+  left: -webkit-calc(50% + 84px);
+  left: calc(50% + 84px); }
+
+#tile17 {
+  left: -webkit-calc(50% + 43px);
+  left: calc(50% + 43px); }
+
+#tile18 {
+  left: -webkit-calc(50% + 2px);
+  left: calc(50% + 2px); }
+
+#tile19 {
+  left: -webkit-calc(50% + -39px);
+  left: calc(50% + -39px); }
+
+#tile20 {
+  left: -webkit-calc(50% + -80px);
+  left: calc(50% + -80px); }
+
+#tile8 {
+  z-index: 2; }
+
+#tile10 {
+  z-index: 1; }
+
+#tile12 {
+  border-left-width: 4px; }
+</style>
+    <template repeat='{{tile,i in tiles}}'>
+      <dominoes-tile id='tile{{2*i}}' left='{{tile.left}}' right='{{tile.right}}'></dominoes-tile>
+    </template>
+  </template>
+  <script>(function(scope) {
+  'use strict';
+  return scope.Polymer('dominoes-board', {
+    tiles: [],
+    length: function() {
+      return this.tiles.length;
+    },
+    leftmost: function() {
+      if (this.length() > 0) {
+        return this.tiles[0].left;
+      } else {
+        return null;
+      }
+    },
+    rightmost: function() {
+      if (this.length() > 0) {
+        return this.tiles[0].right;
+      } else {
+        return null;
+      }
+    },
+    move: function(movement) {
+      switch (movement.side) {
+        case 'left':
+          return this.tiles.unshift(movement.tile);
+        case 'right':
+          return this.tiles.push(movement.tile);
+      }
+    },
+    isPlayable: function(tile) {
+      return this.leftmost() === tile.left || this.leftmost() === tile.right || this.rightmost() === tile.left || this.rightmost() === tile.right;
+    },
+    fireLasers: function() {
+      return this.fire('seed-element-lasers-success', {
+        sound: 'Pew pew pew!'
+      });
+    }
+  });
+})(window);
+</script>
+</polymer-element>

@@ -1,0 +1,86 @@
+<link href='../polymer/polymer.html' rel='import'>
+<link href='icons.html' rel='import'>
+<polymer-element attributes='left right' constructor='DominoesTile' name='dominoes-tile'>
+  <template>
+    <style>:host {
+  color: black;
+  background-color: white;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid black;
+  border-bottom-width: 4px;
+  border-right-width: 4px; }
+  :host.vertical {
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg); }
+
+core-icon {
+  fill: black; }
+
+.separator {
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: 2px;
+  height: 75%;
+  background-color: black; }
+
+.pin {
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: black; }
+
+.left, .right {
+  display: block;
+  width: 40px;
+  height: 40px;
+  position: absolute; }
+
+.right {
+  left: 40px; }
+</style>
+    <core-icon alt='{{left}}' class='left' icon='dominoes:dot{{left}}'></core-icon>
+    <div class='separator'></div>
+    <div class='pin'></div>
+    <core-icon alt='{{right}}' class='right' icon='dominoes:dot{{right}}'></core-icon>
+  </template>
+  <script>(function(scope) {
+  'use strict';
+  return scope.Polymer('dominoes-tile', {
+    left: 0,
+    right: 0,
+    value: 0,
+    ready: function() {
+      this.value = this.left + this.right;
+      return this;
+    },
+    reverse: function() {
+      this.left = this.right;
+      this.right = this.value - this.left;
+      return this;
+    },
+    contains: function(number) {
+      return number === this.left || number === this.right;
+    }
+  });
+})(window);
+</script>
+</polymer-element>

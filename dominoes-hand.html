@@ -1,0 +1,40 @@
+<link href='../polymer/polymer.html' rel='import'>
+<link href='dominoes-tile.html' rel='import'>
+<polymer-element attributes='tiles' constructor='DominoesHand' name='dominoes-hand'>
+  <template>
+    <style>
+</style>
+    <template repeat='{{tile,i in tiles}}'>
+      <dominoes-tile id='tile{{i}}' left='{{tile.left}}' right='{{tile.right}}'></dominoes-tile>
+    </template>
+  </template>
+  <script>(function(scope) {
+  'use strict';
+  return scope.Polymer('dominoes-hand', {
+    tiles: [],
+    length: function() {
+      return this.tiles.length;
+    },
+    leftmost: function() {
+      if (this.length() > 0) {
+        return this.tiles[0].left;
+      } else {
+        return null;
+      }
+    },
+    rightmost: function() {
+      if (this.length() > 0) {
+        return this.tiles[0].right;
+      } else {
+        return null;
+      }
+    },
+    fireLasers: function() {
+      return this.fire('seed-element-lasers-success', {
+        sound: 'Pew pew pew!'
+      });
+    }
+  });
+})(window);
+</script>
+</polymer-element>
