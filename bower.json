@@ -11,7 +11,7 @@
         "**/.*",
         "bower_components",
         "node_modules",
-        "build"
+        "build",
         "gulpfile.js",
         "package.json"
     ],

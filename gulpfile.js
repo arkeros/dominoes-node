@@ -28,10 +28,10 @@ gulp.task('haml', function () {
 gulp.task('coffee', function () {
     return gulp.src(config.srcDir + '/scripts/**/*.coffee')
         .pipe($.coffee({bare: true}))
-        .pipe($.closureCompiler({
-            compilerPath: 'bower_components/closure-compiler/compiler.jar',
-            fileName: 'build.js'
-        }))
+//        .pipe($.closureCompiler({
+//            compilerPath: 'bower_components/closure-compiler/compiler.jar',
+//            fileName: 'build.js'
+//        }))
         .pipe(gulp.dest(config.tmpDir + '/scripts/'));
 });
 

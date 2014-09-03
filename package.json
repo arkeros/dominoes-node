@@ -1,6 +1,10 @@
 {
   "name": "dominoes-node",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arkeros/dominoes-node.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "glob": "*",
@@ -30,7 +34,6 @@
     "gulp-symlink": "^1.1.0",
     "gulp-tap": "^0.1.1",
     "gulp-uglify": "*",
-    "gulp-uncss": "^0.4.4",
     "gulp-useref": "^0.4.3",
     "gulp-zopfli": "^0.1.1",
     "jshint-stylish": "*",
