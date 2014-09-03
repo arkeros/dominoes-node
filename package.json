@@ -24,7 +24,7 @@
     "gulp-replace": "^0.3.0",
     "gulp-ruby-haml": "*",
     "gulp-ruby-sass": "*",
-    "gulp-size": "^0.4.0",
+    "gulp-size": "*",
     "gulp-smoosher": "*",
     "gulp-strip-debug": "^0.3.0",
     "gulp-symlink": "^1.1.0",
@@ -34,7 +34,6 @@
     "gulp-useref": "^0.4.3",
     "gulp-zopfli": "^0.1.1",
     "jshint-stylish": "*",
-    "opn": "^0.1.1",
     "orchestrator": "*",
     "path": "^0.4.9",
     "run-sequence": "*"

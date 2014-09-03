@@ -72,5 +72,8 @@ gulp.task('default', ['clean'], function (cb) {
 
 gulp.task('dist', function () {
     return gulp.src(config.buildDir + '/*')
+        .pipe($.size({
+            showFiles: true
+        }))
         .pipe(gulp.dest(config.distDir + '/'));
 });
