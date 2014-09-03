@@ -18,9 +18,9 @@ do (scope = window) ->
 
         move: (hand_index, movement) ->
             if hand_index isnt @ply
-                null  # TODO throw
+                return null  # TODO throw
             if not _.contains @currentHand(), movement.tile
-                null  # TODO throw
+                return null  # TODO throw
             @board.move(movement)
 
         toggleFullScreen: ->
