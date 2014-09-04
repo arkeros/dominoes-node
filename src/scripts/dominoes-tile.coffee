@@ -4,11 +4,9 @@ do (scope = window) ->
     ,
         left: 0
         right: 0
-        value: 0
-
-        ready: ->
-            @value = @left + @right
-            this
+        computed:
+            value: 'left + right'
+            double: 'left == right'
 
         reverse: ->
             @left = @right

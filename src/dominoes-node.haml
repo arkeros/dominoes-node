@@ -10,9 +10,9 @@
         / smoosh
         %link(rel="stylesheet" href="styles/dominoes-node.css")
         / endsmoosh
-        #ply {{ply}}
-        #n_deck {{n_deck}}
-        %dominoes-board#board(tiles="{{board}}")
+        #ply Ply: {{ply}}
+        #n_deck Deck: {{n_deck}}
+        %dominoes-board#board(tiles="{{board.tiles}}" root="{{board.root}}")
         %template(repeat="{{hand,i in hands}}")
             %dominoes-hand(id="hand{{i}}" tiles="{{hand}}")  
         #core-toolbar#toolbar

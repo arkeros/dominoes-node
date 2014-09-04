@@ -15,8 +15,8 @@
   border-right-width: 4px; }
   :host.vertical {
     -webkit-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg); }
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg); }
 
 core-icon {
   fill: black; }
@@ -67,10 +67,9 @@ core-icon {
   return scope.Polymer('dominoes-tile', {
     left: 0,
     right: 0,
-    value: 0,
-    ready: function() {
-      this.value = this.left + this.right;
-      return this;
+    computed: {
+      value: 'left + right',
+      double: 'left == right'
     },
     reverse: function() {
       this.left = this.right;

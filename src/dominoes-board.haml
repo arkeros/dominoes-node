@@ -6,8 +6,9 @@
         / smoosh
         %link(rel="stylesheet" href="styles/dominoes-board.css")
         / endsmoosh
+        .span rootIndex: {{rootIndex}}
         %template(repeat="{{tile,i in tiles}}")
-            %dominoes-tile(id="tile{{2*i}}" left="{{tile.left}}" right="{{tile.right}}")
+            %dominoes-tile(id="tile{{2*(i - rootIndex)}}" left="{{tile[0]}}" right="{{tile[1]}}")
     / smoosh
     %script(src="scripts/dominoes-board.js")
     / endsmoosh

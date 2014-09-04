@@ -23,9 +23,9 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.25); }
 </style>
-    <div id='ply'>{{ply}}</div>
-    <div id='n_deck'>{{n_deck}}</div>
-    <dominoes-board id='board' tiles='{{board}}'></dominoes-board>
+    <div id='ply'>Ply: {{ply}}</div>
+    <div id='n_deck'>Deck: {{n_deck}}</div>
+    <dominoes-board id='board' root='{{board.root}}' tiles='{{board.tiles}}'></dominoes-board>
     <template repeat='{{hand,i in hands}}'>
       <dominoes-hand id='hand{{i}}' tiles='{{hand}}'></dominoes-hand>
     </template>
@@ -38,26 +38,32 @@
   <script>(function(scope) {
   'use strict';
   return scope.Polymer('dominoes-node', {
-    hands: [],
-    board: [],
     ply: 0,
     n_deck: 28,
     currentHand: function() {
       return this.hands[this.ply];
     },
+    created: function() {
+      this.hands = [];
+      this.board = {
+        "tiles": [],
+        "root": []
+      };
+      return this;
+    },
     ready: function() {
       this.n_deck = 28;
-      this.n_deck -= _.size(this.board);
+      this.n_deck -= this.board.tiles.length;
       return this.n_deck -= _.reduce(this.hands, function(hand, n) {
         return n + hand.length;
       }, 0);
     },
     move: function(hand_index, movement) {
       if (hand_index !== this.ply) {
-        null;
+        return null;
       }
       if (!_.contains(this.currentHand(), movement.tile)) {
-        null;
+        return null;
       }
       return this.board.move(movement);
     },
