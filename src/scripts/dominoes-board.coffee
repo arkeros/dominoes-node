@@ -19,7 +19,7 @@ do (scope = window) ->
         isPlayable: (tile) ->
             @leftmost is tile.left or @leftmost is tile.right or @rightmost is tile.left or @rightmost is tile.right
         index: (tiles, tile) ->
-            # TODO function for equaling tiles...
+            # TODO function for equaling s...
             return index for index, match of tiles when match[0] is tile[0] and match[1] is tile[1] 
             -1
         fireLasers: ->

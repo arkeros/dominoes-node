@@ -1,12 +1,43 @@
 <link href='../polymer/polymer.html' rel='import'>
 <link href='underscore.html' rel='import'>
 <link href='screenfull.html' rel='import'>
+<link href='../core-drag-drop/core-drag-drop.html' rel='import'>
+<link href='../core-tooltip/core-tooltip.html' rel='import'>
+<link href='../core-icon-button/core-icon-button.html' rel='import'>
 <link href='dominoes-board.html' rel='import'>
 <link href='dominoes-hand.html' rel='import'>
-<polymer-element attributes='ply board hands' constructor='DominoesNode' name='dominoes-node'>
+<polymer-element attributes='ply board hands' constructor='DominoesNode' name='dominoes-node' on-drag-start='{{dragStart}}'>
   <template>
     <style>:host {
   position: relative; }
+
+body:-webkit-full-screen /deep/ dominoes-node {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; }
+
+body:-moz-full-screen /deep/ dominoes-node {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; }
+
+body:-ms-fullscreen /deep/ dominoes-node {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; }
+
+body:fullscreen /deep/ dominoes-node {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; }
 
 #board {
   overflow: auto;
@@ -17,21 +48,45 @@
   right: 0;
   bottom: 0; }
 
+#hand0, #hand1 {
+  position: absolute;
+  width: 100%;
+  text-align: center; }
+  #hand0 /deep/ dominoes-tile, #hand1 /deep/ dominoes-tile {
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+    margin: 0 -20px;
+    border-bottom: 1px;
+    border-top: 4px; }
+
+#hand0 {
+  bottom: 20px; }
+
+#hand1 {
+  top: 20px; }
+
 #toolbar {
   position: absolute;
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.25); }
 </style>
+    <core-drag-drop></core-drag-drop>
     <div id='ply'>Ply: {{ply}}</div>
     <div id='n_deck'>Deck: {{n_deck}}</div>
     <dominoes-board id='board' root='{{board.root}}' tiles='{{board.tiles}}'></dominoes-board>
     <template repeat='{{hand,i in hands}}'>
-      <dominoes-hand id='hand{{i}}' tiles='{{hand}}'></dominoes-hand>
+      <div id='hand{{i}}'>
+        <template repeat='{{tile,j in hand}}'>
+          <dominoes-tile draggable='true' id='tile{{j}}' left='{{tile[0]}}' right='{{tile[1]}}'></dominoes-tile>
+        </template>
+      </div>
+      <!-- %dominoes-hand(id="hand{{i}}" tiles="{{hand}}") -->
     </template>
     <div id='toolbar'>
       <core-tooltip label='Pantalla completa'>
-        <core-icon-button icon='fullscreen' on-tap='{{toggleFullScreen}}'></core-icon-button>
+        <core-icon-button icon='fullscreen' onclick='screenfull.enabled&amp;&amp;screenfull.toggle()'></core-icon-button>
       </core-tooltip>
     </div>
   </template>
@@ -67,11 +122,17 @@
       }
       return this.board.move(movement);
     },
-    toggleFullScreen: function() {
-      if (screenfull.enabled) {
-        screenfull.toggle();
+    dragStart: function(event, detail, sender) {
+      var tile;
+      if (detail.event.target.tagName === 'DOMINOES-TILE') {
+        tile = detail.event.target;
+        scope.console.log(tile);
+        detail.avatar.appendChild(tile.cloneNode(true));
+        detail.avatar.style.cssText = 'border: 3px solid pink; width: 32px; height: 32px; border-radius: 32px; background-color: whitesmoke';
+        detail.drag = function() {};
+        detail.drop = function() {};
       }
-      return this;
+      return false;
     }
   });
 })(window);

@@ -1,13 +1,13 @@
 %link(rel="import" href="../polymer/polymer.html")
 %link(rel="import" href="dominoes-tile.html")
 
-%polymer-element(name="dominoes-hand" attributes="tiles" constructor="DominoesHand")
+%polymer-element(name="dominoes-hand" attributes="tiles" constructor="DominoesHand" layout=true horizontal=true center-justified=true on-drag-start='{{dragStart}}')
     %template
         / smoosh
         %link(rel="stylesheet" href="styles/dominoes-hand.css")
         / endsmoosh
         %template(repeat="{{tile,i in tiles}}")
-            %dominoes-tile(id="tile{{i}}" left="{{tile.left}}" right="{{tile.right}}")
+            %dominoes-tile(id="tile{{i}}" left="{{tile[0]}}" right="{{tile[1]}}")
     / smoosh
     %script(src="scripts/dominoes-hand.js")
     / endsmoosh

@@ -6,12 +6,12 @@ do (scope = window) ->
 
         currentHand: ->
             @hands[@ply]
-            
+
         created: ->
             @hands = []
             @board = {"tiles": [], "root": []}
             this
-            
+
         ready: ->
             @n_deck  = 28
             @n_deck -= @board.tiles.length
@@ -26,8 +26,14 @@ do (scope = window) ->
                 return null  # TODO throw
             @board.move(movement)
 
-        toggleFullScreen: ->
-            if screenfull.enabled
-                screenfull.toggle()
-            this
-            
+        dragStart: (event, detail, sender) ->
+            if detail.event.target.tagName is 'DOMINOES-TILE'
+                tile = detail.event.target
+                # TODO otros checks
+                # NOTE not remove the original dragged element
+                scope.console.log tile
+                detail.avatar.appendChild tile.cloneNode true
+                detail.avatar.style.cssText = 'border: 3px solid pink; width: 32px; height: 32px; border-radius: 32px; background-color: whitesmoke'
+                detail.drag = ->
+                detail.drop = ->
+            false

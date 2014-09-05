@@ -1,23 +1,31 @@
 %link(rel="import" href="../polymer/polymer.html")
 %link(rel="import" href="underscore.html")
 %link(rel="import" href="screenfull.html")
--#%link(rel="import" href="../core-icon/core-icon.html")
+
+%link(href="../core-drag-drop/core-drag-drop.html" rel="import")
+%link(href="../core-tooltip/core-tooltip.html" rel="import")
+%link(href="../core-icon-button/core-icon-button.html" rel="import")
+
 %link(rel="import" href="dominoes-board.html")
 %link(rel="import" href="dominoes-hand.html")
 
-%polymer-element(name="dominoes-node" attributes="ply board hands" constructor="DominoesNode")
+%polymer-element(name="dominoes-node" attributes="ply board hands" constructor="DominoesNode" on-drag-start='{{dragStart}}')
     %template
         / smoosh
         %link(rel="stylesheet" href="styles/dominoes-node.css")
         / endsmoosh
+        %core-drag-drop
         #ply Ply: {{ply}}
         #n_deck Deck: {{n_deck}}
         %dominoes-board#board(tiles="{{board.tiles}}" root="{{board.root}}")
         %template(repeat="{{hand,i in hands}}")
-            %dominoes-hand(id="hand{{i}}" tiles="{{hand}}")  
+            %div(id="hand{{i}}")
+                %template(repeat="{{tile,j in hand}}")
+                    %dominoes-tile(id="tile{{j}}" left="{{tile[0]}}" right="{{tile[1]}}" draggable="true")
+            / %dominoes-hand(id="hand{{i}}" tiles="{{hand}}")
         #core-toolbar#toolbar
             %core-tooltip(label="Pantalla completa")
-                %core-icon-button(icon="fullscreen" on-tap="{{toggleFullScreen}}")
+                %core-icon-button(icon="fullscreen" onclick="screenfull.enabled&&screenfull.toggle()")
     / smoosh
     %script(src="scripts/dominoes-node.js")
     / endsmoosh

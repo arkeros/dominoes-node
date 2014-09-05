@@ -1,38 +1,36 @@
 {
-    "name": "dominoes-node",
-    "description": "Awesome stuff, the modular and interoperable way",
-    "version": "0.0.0",
-    "main": [
-        "dominoes-node.html",
-        "dominoes-board.html",
-        "dominoes-hand.html",
-        "dominoes-tile.html"
-    ],
-    "license": "GPL-3.0+",
-    "ignore": [
-        "**/.*",
-        "bower_components",
-        "node_modules",
-        "build",
-        "gulpfile.js",
-        "package.json"
-    ],
-    "keywords": [
-        "polymer",
-        "web-components"
-    ],
-    "authors": ["Rafael Arquero Gimeno"],
-    "homepage": "https://github.com/arkeros/dominoes-node",
-    "repository": {        
-        "type": "git",
-        "url": "git://github.com/arkeros/dominoes-node.git"
-    },
-    "dependencies": {
-        "platform": "Polymer/platform#*",
-        "polymer": "*"
-    },
-    "devDependencies": {
-        "closure-compiler" : "http://dl.google.com/closure-compiler/compiler-latest.zip"
-    },    
-    "private": true
+	"name": "dominoes-node",
+	"description": "Awesome stuff, the modular and interoperable way",
+	"version": "0.0.0",
+	"main": [
+		"dominoes-node.html",
+		"dominoes-board.html",
+		"dominoes-hand.html",
+		"dominoes-tile.html"
+	],
+	"license": "GPL-3.0+",
+	"ignore": [
+		"**/.*",
+		"bower_components",
+		"node_modules",
+		"build",
+		"gulpfile.js",
+		"package.json"
+	],
+	"keywords": [
+		"dominoes",
+		"polymer",
+		"web-components"
+	],
+	"authors": ["Rafael Arquero Gimeno"],
+	"homepage": "https://github.com/arkeros/dominoes-node",
+	"repository": {        
+		"type": "git",
+		"url": "git://github.com/arkeros/dominoes-node.git"
+	},
+	"dependencies": {
+		"polymer": ">=0.4.0 <1.0.0"
+	},
+	"devDependencies": {},    
+	"private": true
 }

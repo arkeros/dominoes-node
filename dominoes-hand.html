@@ -1,11 +1,11 @@
 <link href='../polymer/polymer.html' rel='import'>
 <link href='dominoes-tile.html' rel='import'>
-<polymer-element attributes='tiles' constructor='DominoesHand' name='dominoes-hand'>
+<polymer-element attributes='tiles' center-justified constructor='DominoesHand' horizontal layout name='dominoes-hand' on-drag-start='{{dragStart}}'>
   <template>
     <style>
 </style>
     <template repeat='{{tile,i in tiles}}'>
-      <dominoes-tile id='tile{{i}}' left='{{tile.left}}' right='{{tile.right}}'></dominoes-tile>
+      <dominoes-tile id='tile{{i}}' left='{{tile[0]}}' right='{{tile[1]}}'></dominoes-tile>
     </template>
   </template>
   <script>(function(scope) {
@@ -28,6 +28,9 @@
       } else {
         return null;
       }
+    },
+    dragStart: function(event, detail, sender) {
+      return scope.console.log(detail.event.target);
     },
     fireLasers: function() {
       return this.fire('seed-element-lasers-success', {

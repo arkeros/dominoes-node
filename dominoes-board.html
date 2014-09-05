@@ -126,8 +126,8 @@ tile-180deg, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #til
   return scope.Polymer('dominoes-board', {
     computed: {
       length: 'tiles.length',
-      leftmost: 'length ? tiles[0][0] : null',
-      rightmost: 'length ? tiles[-1][1] : null',
+      leftmost: 'tiles.length ? tiles[0][0] : null',
+      rightmost: 'tiles.length ? tiles[-1][1] : null',
       rootIndex: 'index(tiles, root)'
     },
     created: function() {
