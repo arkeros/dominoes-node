@@ -1,5 +1,4 @@
 <link href='../polymer/polymer.html' rel='import'>
-<link href='underscore.html' rel='import'>
 <link href='screenfull.html' rel='import'>
 <link href='../core-drag-drop/core-drag-drop.html' rel='import'>
 <link href='../core-tooltip/core-tooltip.html' rel='import'>
@@ -10,34 +9,6 @@
   <template>
     <style>:host {
   position: relative; }
-
-body:-webkit-full-screen /deep/ dominoes-node {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%; }
-
-body:-moz-full-screen /deep/ dominoes-node {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%; }
-
-body:-ms-fullscreen /deep/ dominoes-node {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%; }
-
-body:fullscreen /deep/ dominoes-node {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%; }
 
 #board {
   overflow: auto;
@@ -79,6 +50,7 @@ body:fullscreen /deep/ dominoes-node {
     <template repeat='{{hand,i in hands}}'>
       <div id='hand{{i}}'>
         <template repeat='{{tile,j in hand}}'>
+          <!-- TODO check if draggable is absolutely necessary -->
           <dominoes-tile draggable='true' id='tile{{j}}' left='{{tile[0]}}' right='{{tile[1]}}'></dominoes-tile>
         </template>
       </div>
@@ -86,17 +58,19 @@ body:fullscreen /deep/ dominoes-node {
     </template>
     <div id='toolbar'>
       <core-tooltip label='Pantalla completa'>
-        <core-icon-button icon='fullscreen' onclick='screenfull.enabled&amp;&amp;screenfull.toggle()'></core-icon-button>
+        <core-icon-button icon='fullscreen' onclick='screenfull.enabled&amp;&amp;screenfull.toggle(this.parentNode)'></core-icon-button>
       </core-tooltip>
     </div>
   </template>
-  <script>(function(scope) {
+  <script>var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+(function(scope) {
   'use strict';
   return scope.Polymer('dominoes-node', {
     ply: 0,
-    n_deck: 28,
-    currentHand: function() {
-      return this.hands[this.ply];
+    computed: {
+      currentHand: 'hands[ply]',
+      n_deck: '+28 - board.tiles.length - sumLength(hands)'
     },
     created: function() {
       this.hands = [];
@@ -106,31 +80,54 @@ body:fullscreen /deep/ dominoes-node {
       };
       return this;
     },
-    ready: function() {
-      this.n_deck = 28;
-      this.n_deck -= this.board.tiles.length;
-      return this.n_deck -= _.reduce(this.hands, function(hand, n) {
-        return n + hand.length;
-      }, 0);
-    },
     move: function(hand_index, movement) {
+      var _ref;
       if (hand_index !== this.ply) {
         return null;
       }
-      if (!_.contains(this.currentHand(), movement.tile)) {
+      if (_ref = movement.tile, __indexOf.call(this.currentHand, _ref) < 0) {
         return null;
       }
-      return this.board.move(movement);
+      return this.$.board.move(movement);
+    },
+    sumLength: function(iterable) {
+      return iterable.reduce(function(n, item) {
+        return n + item.length;
+      }, 0);
     },
     dragStart: function(event, detail, sender) {
-      var tile;
+      var clone, that, tile;
+      scope.console.log(detail.event.relatedTarget);
+      that = this;
+      detail.avatar.innerHTML = '';
       if (detail.event.target.tagName === 'DOMINOES-TILE') {
         tile = detail.event.target;
-        scope.console.log(tile);
-        detail.avatar.appendChild(tile.cloneNode(true));
-        detail.avatar.style.cssText = 'border: 3px solid pink; width: 32px; height: 32px; border-radius: 32px; background-color: whitesmoke';
+        clone = new DominoesTile();
+        clone.left = tile.left;
+        clone.right = tile.right;
+        tile.style.display = 'none';
+        detail.avatar.appendChild(clone);
         detail.drag = function() {};
-        detail.drop = function() {};
+        detail.drop = function(dragInfo) {
+          var dropTarget, handTile, _i, _len, _ref, _results;
+          dropTarget = dragInfo.event.relatedTarget;
+          tile = dragInfo.avatar.children[0];
+          scope.console.log(dropTarget);
+          if (dropTarget.id === 'board') {
+            return dropTarget.move({
+              side: 'left',
+              tile: [tile.left, tile.right]
+            });
+          } else {
+            _ref = that.$.hand0.children;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              handTile = _ref[_i];
+              _results.push(handTile.display = '');
+            }
+            return _results;
+          }
+        };
       }
       return false;
     }

@@ -10,24 +10,85 @@
 dominoes-tile {
   position: absolute; }
 
-tile0deg, #tile-5, #tile-4, #tile-3, #tile-2, #tile-1, #tile0, #tile1, #tile2, #tile3, #tile4, #tile5, #tile6, #tile7 {
-  top: calc(50% - 21px); }
+top, #tile-22, #tile-21, #tile-20, #tile-19, #tile-18, #tile-17, #tile-16, #tile-15, #tile-14, #tile-13, #tile-12, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #tile19, #tile20, #tile21, #tile22, bottom {
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
+  border-width: 1px;
+  border-top-width: 4px; }
 
-tile-90deg, #tile8, #tile9, #tile10, #tile11 {
-  left: calc(50% + 246px + 22px);
+left, #tile-11, #tile-10, #tile-9, #tile-8, right, #tile8, #tile9, #tile10, #tile11 {
   -webkit-transform: rotate(-90deg);
       -ms-transform: rotate(-90deg);
           transform: rotate(-90deg);
   border-right-width: 1px;
   border-left-width: 4px; }
 
-tile-180deg, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #tile19, #tile20 {
-  top: calc(50% - 21px - 164px);
-  -webkit-transform: rotate(-180deg);
-      -ms-transform: rotate(-180deg);
-          transform: rotate(-180deg);
-  border-width: 1px;
-  border-top-width: 4px; }
+bottom {
+  top: calc(50% + 21px + 164px); }
+
+left, #tile-11, #tile-10, #tile-9, #tile-8 {
+  left: calc(50% - 328px - 22px); }
+
+middle, #tile-7, #tile-6, #tile-5, #tile-4, #tile-3, #tile-2, #tile-1, #tile0, #tile1, #tile2, #tile3, #tile4, #tile5, #tile6, #tile7 {
+  top: calc(50% - 21px); }
+
+right, #tile8, #tile9, #tile10, #tile11 {
+  left: calc(50% + 246px + 22px); }
+
+top, #tile-22, #tile-21, #tile-20, #tile-19, #tile-18, #tile-17, #tile-16, #tile-15, #tile-14, #tile-13, #tile-12, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #tile19, #tile20, #tile21, #tile22 {
+  top: calc(50% - 21px - 164px); }
+
+#tile-22 {
+  left: calc(50% - 1722px - 22px); }
+
+#tile-21 {
+  left: calc(50% - 1681px - 22px); }
+
+#tile-20 {
+  left: calc(50% - 1640px - 22px); }
+
+#tile-19 {
+  left: calc(50% - 1599px - 22px); }
+
+#tile-18 {
+  left: calc(50% - 1558px - 22px); }
+
+#tile-17 {
+  left: calc(50% - 1517px - 22px); }
+
+#tile-16 {
+  left: calc(50% - 1476px - 22px); }
+
+#tile-15 {
+  left: calc(50% - 1435px - 22px); }
+
+#tile-14 {
+  left: calc(50% - 1394px - 22px); }
+
+#tile-13 {
+  left: calc(50% - 1353px - 22px); }
+
+#tile-12 {
+  left: calc(50% - 1312px - 22px); }
+
+#tile-11 {
+  top: calc(50% - -122px); }
+
+#tile-10 {
+  top: calc(50% - -81px); }
+
+#tile-9 {
+  top: calc(50% - -40px); }
+
+#tile-8 {
+  top: calc(50% - 1px); }
+
+#tile-7 {
+  left: calc(50% + -327px); }
+
+#tile-6 {
+  left: calc(50% + -286px); }
 
 #tile-5 {
   left: calc(50% + -245px); }
@@ -107,6 +168,12 @@ tile-180deg, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #til
 #tile20 {
   left: calc(50% + -80px); }
 
+#tile21 {
+  left: calc(50% + -121px); }
+
+#tile22 {
+  left: calc(50% + -162px); }
+
 #tile8 {
   z-index: 2; }
 
@@ -137,9 +204,9 @@ tile-180deg, #tile12, #tile13, #tile14, #tile15, #tile16, #tile17, #tile18, #til
     move: function(movement) {
       switch (movement.side) {
         case 'left':
-          return this.tiles.unshift(movement.tile);
+          return this.tiles = [movement.tile].concat(this.tiles);
         case 'right':
-          return this.tiles.push(movement.tile);
+          return this.tiles = this.tiles.concat([movement.tile]);
       }
     },
     isPlayable: function(tile) {

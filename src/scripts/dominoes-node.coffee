@@ -2,38 +2,53 @@ do (scope = window) ->
     'use strict'
     scope.Polymer 'dominoes-node',
         ply: 0
-        n_deck: 28
-
-        currentHand: ->
-            @hands[@ply]
+        computed:
+            currentHand: 'hands[ply]'
+            n_deck: '+28 - board.tiles.length - sumLength(hands)'
 
         created: ->
             @hands = []
             @board = {"tiles": [], "root": []}
             this
 
-        ready: ->
-            @n_deck  = 28
-            @n_deck -= @board.tiles.length
-            @n_deck -= _.reduce @hands,
-                (hand, n) -> n + hand.length,
-                0
-
         move: (hand_index, movement) ->
             if hand_index isnt @ply
                 return null  # TODO throw
-            if not _.contains @currentHand(), movement.tile
+            if movement.tile not in @currentHand
                 return null  # TODO throw
-            @board.move(movement)
+            @$.board.move(movement)
+
+        sumLength: (iterable) ->
+            # TODO make abstract sum function like python
+            iterable.reduce (n, item) ->
+                    n + item.length
+                , 0
 
         dragStart: (event, detail, sender) ->
-            if detail.event.target.tagName is 'DOMINOES-TILE'
+            scope.console.log detail.event.relatedTarget
+            that = this
+            detail.avatar.innerHTML = ''
+            if detail.event.target.tagName is 'DOMINOES-TILE'  # TODO otros checks
                 tile = detail.event.target
-                # TODO otros checks
-                # NOTE not remove the original dragged element
-                scope.console.log tile
-                detail.avatar.appendChild tile.cloneNode true
-                detail.avatar.style.cssText = 'border: 3px solid pink; width: 32px; height: 32px; border-radius: 32px; background-color: whitesmoke'
+                #clone tile
+                clone = new DominoesTile()
+                clone.left = tile.left
+                clone.right = tile.right
+                #add to avatar
+                tile.style.display = 'none'  # NOTE not remove the original dragged element
+                detail.avatar.appendChild clone
+                #
                 detail.drag = ->
-                detail.drop = ->
+                detail.drop = (dragInfo) ->
+                    dropTarget = dragInfo.event.relatedTarget
+                    tile = dragInfo.avatar.children[0]
+                    scope.console.log dropTarget
+                    if dropTarget.id is 'board'
+                        dropTarget.move
+                            side: 'left'
+                            tile: [tile.left, tile.right]
+                    else
+                        handTile.display = '' for handTile in that.$.hand0.children
+
+
             false

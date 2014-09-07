@@ -24,13 +24,15 @@
 	],
 	"authors": ["Rafael Arquero Gimeno"],
 	"homepage": "https://github.com/arkeros/dominoes-node",
-	"repository": {        
+	"repository": {
 		"type": "git",
 		"url": "git://github.com/arkeros/dominoes-node.git"
 	},
 	"dependencies": {
-		"polymer": ">=0.4.0 <1.0.0"
+		"polymer": ">=0.4.0 <1.0.0",
+        "core-elements": "Polymer/core-elements#*",
+        "screenfull": "*"
 	},
-	"devDependencies": {},    
+	"devDependencies": {},
 	"private": true
 }

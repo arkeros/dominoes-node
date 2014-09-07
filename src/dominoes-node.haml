@@ -1,5 +1,4 @@
 %link(rel="import" href="../polymer/polymer.html")
-%link(rel="import" href="underscore.html")
 %link(rel="import" href="screenfull.html")
 
 %link(href="../core-drag-drop/core-drag-drop.html" rel="import")
@@ -21,11 +20,12 @@
         %template(repeat="{{hand,i in hands}}")
             %div(id="hand{{i}}")
                 %template(repeat="{{tile,j in hand}}")
+                    / TODO check if draggable is absolutely necessary
                     %dominoes-tile(id="tile{{j}}" left="{{tile[0]}}" right="{{tile[1]}}" draggable="true")
             / %dominoes-hand(id="hand{{i}}" tiles="{{hand}}")
         #core-toolbar#toolbar
             %core-tooltip(label="Pantalla completa")
-                %core-icon-button(icon="fullscreen" onclick="screenfull.enabled&&screenfull.toggle()")
+                %core-icon-button(icon="fullscreen" onclick="screenfull.enabled&&screenfull.toggle(this.parentNode)")
     / smoosh
     %script(src="scripts/dominoes-node.js")
     / endsmoosh
