@@ -25,7 +25,7 @@
             / %dominoes-hand(id="hand{{i}}" tiles="{{hand}}")
         #core-toolbar#toolbar
             %core-tooltip(label="Pantalla completa")
-                %core-icon-button(icon="fullscreen" onclick="screenfull.enabled&&screenfull.toggle(this.parentNode)")
+                %core-icon-button(icon="fullscreen" on-tap="{{toggleFullScreen}}")
     / smoosh
     %script(src="scripts/dominoes-node.js")
     / endsmoosh

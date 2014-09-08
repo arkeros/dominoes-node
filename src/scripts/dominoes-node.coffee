@@ -24,6 +24,11 @@ do (scope = window) ->
                     n + item.length
                 , 0
 
+        toggleFullScreen: (event, detail, sender) ->
+            scope.console.log 'toggleFullScreen'
+            if screenfull.enabled
+                screenfull.toggle scope.document.documentElement
+
         dragStart: (event, detail, sender) ->
             scope.console.log detail.event.relatedTarget
             that = this
@@ -52,3 +57,4 @@ do (scope = window) ->
 
 
             false
+

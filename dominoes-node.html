@@ -58,7 +58,7 @@
     </template>
     <div id='toolbar'>
       <core-tooltip label='Pantalla completa'>
-        <core-icon-button icon='fullscreen' onclick='screenfull.enabled&amp;&amp;screenfull.toggle(this.parentNode)'></core-icon-button>
+        <core-icon-button icon='fullscreen' on-tap='{{toggleFullScreen}}'></core-icon-button>
       </core-tooltip>
     </div>
   </template>
@@ -94,6 +94,12 @@
       return iterable.reduce(function(n, item) {
         return n + item.length;
       }, 0);
+    },
+    toggleFullScreen: function(event, detail, sender) {
+      scope.console.log('toggleFullScreen');
+      if (screenfull.enabled) {
+        return screenfull.toggle(scope.document.documentElement);
+      }
     },
     dragStart: function(event, detail, sender) {
       var clone, that, tile;
